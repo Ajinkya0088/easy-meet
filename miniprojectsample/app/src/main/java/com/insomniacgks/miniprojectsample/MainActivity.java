@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         */
         try {
             microphoneInputStream.close();
-            Thread.sleep(8000);
+            Thread.sleep(6000);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -126,10 +126,10 @@ public class MainActivity extends AppCompatActivity {
 
 
         IamOptions iamOptions = new IamOptions.Builder()
-                .apiKey("aJ471j-r6jv1byn-tXhWq9g5wr4FOMZIMUIGwZ5IJpZK")
+                .apiKey("Wu_ZdoOU_L8sAtCd2OOwMnpb3BLvOA4NcX_r2rUK1LvQ")
                 .build();
         speechToText = new SpeechToText(iamOptions);
-        speechToText.setEndPoint("https://gateway-lon.watsonplatform.net/speech-to-text/api");
+        speechToText.setEndPoint("https://stream.watsonplatform.net/speech-to-text/api");
         microphoneInputStream = new MicrophoneInputStream(true);
         final RecognizeOptions options = new RecognizeOptions.Builder()
                 .audio(microphoneInputStream)
@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
                 .contentType(ContentType.OPUS.toString())
                 .interimResults(false)
                 .inactivityTimeout(2000)
-                .model("en-US_BroadbandModel")
+//                .model("en-GB_BroadbandModel")
                 .build();
 
         new Thread(new Runnable() {
