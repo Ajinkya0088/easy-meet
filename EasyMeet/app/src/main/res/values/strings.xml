@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">EasyMeet</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="no_account_found">No Account Found!</string>
+    <string name="sign_up_message">This device doesn\'t have any account signed in.\nPlease Login or Sign Up to continue.</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="log_in">Log In</string>
+    <string name="welcome_message">Welcome\nTo\nEasyMeat</string>
+    <string name="email">Email</string>
+    <string name="name">Name</string>
+    <string name="please_wait">Please Wait…</string>
+    <string name="sign_up_to_easymeet">Sign Up to EasyMeet</string>
+    <string name="log_in_to_easymeet">Log In to EasyMeet</string>
+    <string name="account_created">Account created successfully</string>
+    <string name="account_creation_failed">Account creation failed. Please try again later.</string>
+    <string name="login_failed">Log in failed. Please try again.</string>
+    <string name="succesfully_logged_in">Successfully Logged In.</string>
 </resources>

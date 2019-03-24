@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "520745758148",
+    "firebase_url": "https://easymeet-21e7c.firebaseio.com",
+    "project_id": "easymeet-21e7c",
+    "storage_bucket": "easymeet-21e7c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:520745758148:android:67d18dd0cbeeca38",
+        "android_client_info": {
+          "package_name": "com.nerds.easymeet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "520745758148-48mvhb0p27rg7uf3hpilqq5go28661n2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nerds.easymeet",
+            "certificate_hash": "8582b6f4dc5111d5799bdf54619c270c8770f2ac"
+          }
+        },
+        {
+          "client_id": "520745758148-laf3p02fbiltqk148v2ma5mc4j02ae5c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAjiB0DGfoFM9hxNsTTb4Dx3BueK1gYOEc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "520745758148-laf3p02fbiltqk148v2ma5mc4j02ae5c.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

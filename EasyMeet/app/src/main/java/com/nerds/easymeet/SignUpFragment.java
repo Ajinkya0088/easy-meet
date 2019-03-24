@@ -1,6 +1,7 @@
 package com.nerds.easymeet;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,7 +11,6 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,27 +28,26 @@ import com.google.firebase.auth.FirebaseAuth;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     View view;
-    EditText mPasswordField, mEmailField;
-    CardView mLogInButton;
+    EditText mPasswordField, mEmailField, mUserNameField;
+    CardView mSignUpButton;
     LinearLayout mProgressBarLayout;
-    TextView logInButtonTV;
+    TextView signUpButtonTV;
     private FirebaseAuth firebaseAuth;
 
-
-    public LoginFragment() {
+    public SignUpFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark));
-        view = inflater.inflate(R.layout.fragment_login, container, false);
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_orange_dark));
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
         initializeViews();
         return view;
     }
@@ -57,7 +56,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         firebaseAuth = FirebaseAuth.getInstance();
-        mLogInButton.setOnClickListener(this);
+        mSignUpButton.setOnClickListener(this);
     }
 
     @Override
@@ -66,30 +65,32 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        logInButtonTV.setVisibility(View.GONE);
+        signUpButtonTV.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.VISIBLE);
 
-        firebaseAuth.signInWithEmailAndPassword(
+        firebaseAuth.createUserWithEmailAndPassword(
                 mEmailField.getText().toString(), mPasswordField.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.succesfully_logged_in),
+                                    SignUpFragment.this.getContext(),
+                                    SignUpFragment.this.getString(R.string.account_created),
                                     Toast.LENGTH_LONG
                             ).show();
-                            startActivity(new Intent(getContext(), MainActivity.class));
-                            getActivity().finish();
+
+
+                            startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
+                            SignUpFragment.this.getActivity().finish();
                         } else {
                             Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.login_failed),
+                                    SignUpFragment.this.getContext(),
+                                    SignUpFragment.this.getString(R.string.account_creation_failed),
                                     Toast.LENGTH_LONG
                             ).show();
                             mProgressBarLayout.setVisibility(View.GONE);
-                            logInButtonTV.setVisibility(View.VISIBLE);
+                            signUpButtonTV.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -97,6 +98,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private boolean validateForm() {
         boolean valid = true;
+
+        String userName = mUserNameField.getText().toString();
+        if (TextUtils.isEmpty(userName)) {
+            mUserNameField.setError("Required.");
+            valid = false;
+        } else {
+            mUserNameField.setError(null);
+        }
 
         String email = mEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -120,8 +129,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void initializeViews() {
         mEmailField = view.findViewById(R.id.email_id);
         mPasswordField = view.findViewById(R.id.password);
+        mUserNameField = view.findViewById(R.id.user_name);
         mProgressBarLayout = view.findViewById(R.id.button_progress_bar_layout);
-        mLogInButton = view.findViewById(R.id.log_in_cv);
-        logInButtonTV = view.findViewById(R.id.log_in_tv);
+        mSignUpButton = view.findViewById(R.id.sign_up_cv);
+        signUpButtonTV = view.findViewById(R.id.signup_button_tv);
     }
 }
