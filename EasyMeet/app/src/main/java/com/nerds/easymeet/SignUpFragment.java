@@ -1,7 +1,6 @@
 package com.nerds.easymeet;
 
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -25,7 +24,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 /**
@@ -77,8 +75,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         email = mEmailField.getText().toString();
         password = mPasswordField.getText().toString();
 
-        firebaseAuth.createUserWithEmailAndPassword(
-                email, password)
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
@@ -89,7 +86,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                                     Toast.LENGTH_LONG
                             ).show();
                             SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
-                            sharedPrefEditor.putString(Constants.USER_ID, email.replace(".", ","));
+                            sharedPrefEditor.putString(Constants.USER_EMAIL_ID, email);
                             sharedPrefEditor.apply();
                             startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
                             SignUpFragment.this.getActivity().finish();

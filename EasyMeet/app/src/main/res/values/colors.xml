@@ -5,4 +5,5 @@
     <color name="colorAccent">#D81B60</color>
     <color name="welcome_fragment_color">#D50000</color>
     <color name="transparent">#00000000</color>
+    <color name="create_activity_status_bar_color">#0071B4</color>
 </resources>

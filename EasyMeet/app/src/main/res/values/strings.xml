@@ -22,4 +22,8 @@
     <string name="date">Date</string>
     <string name="time">Time</string>
     <string name="create_new_meeting">Create New Meeting</string>
+    <string name="_1">1.</string>
+    <string name="participant_email_id">Participant Email Id</string>
+    <string name="meeting_participants">Meeting Participants:</string>
+    <string name="add_participant">Add Participant</string>
 </resources>

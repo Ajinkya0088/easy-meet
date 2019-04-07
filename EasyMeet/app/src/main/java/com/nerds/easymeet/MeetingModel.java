@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MeetingModel {
     public String id;
     public String title,description;
-    public int timestamp;
+    public long timestamp;
     public ArrayList<String> participants;
     public String speech_to_text;
     public String summery;
@@ -35,11 +35,11 @@ public class MeetingModel {
         this.description = description;
     }
 
-    public int getTimestamp() {
+    public long getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(int timestamp) {
+    public void setTimestamp(long timestamp) {
         this.timestamp = timestamp;
     }
 
