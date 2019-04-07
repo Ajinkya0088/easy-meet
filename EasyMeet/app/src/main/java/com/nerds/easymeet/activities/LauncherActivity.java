@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
@@ -38,7 +39,8 @@ public class LauncherActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            changeFragment(new MeetingsFragment());
+                            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+                            finish();
                         }
                     });
                 } else {

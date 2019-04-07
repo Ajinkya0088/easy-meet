@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,33 +26,33 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class SignUpFragment extends Fragment implements View.OnClickListener {
+public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private View view;
-    private EditText mPasswordField, mEmailField, mUserNameField;
-    private CardView mSignUpButton;
+    private EditText mPasswordField, mEmailField;
+    private CardView mLogInButton;
     private LinearLayout mProgressBarLayout;
-    private TextView signUpButtonTV;
+    private TextView logInButtonTV;
     private FirebaseAuth firebaseAuth;
-    private SharedPreferences sharedPref;
-    private String email, password;
+    private SharedPreferences.Editor editor;
 
-    public SignUpFragment() {
+    public LoginFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_orange_dark));
-        sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark));
+        view = inflater.inflate(R.layout.fragment_login, container, false);
         initializeViews();
         return view;
     }
@@ -60,7 +61,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         firebaseAuth = FirebaseAuth.getInstance();
-        mSignUpButton.setOnClickListener(this);
+        mLogInButton.setOnClickListener(this);
     }
 
     @Override
@@ -69,35 +70,33 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        signUpButtonTV.setVisibility(View.GONE);
+        logInButtonTV.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.VISIBLE);
 
-        email = mEmailField.getText().toString();
-        password = mPasswordField.getText().toString();
-
-        firebaseAuth.createUserWithEmailAndPassword(email, password)
+        firebaseAuth.signInWithEmailAndPassword(
+                mEmailField.getText().toString(), mPasswordField.getText().toString())
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(
-                                    SignUpFragment.this.getContext(),
-                                    SignUpFragment.this.getString(R.string.account_created),
+                                    LoginFragment.this.getContext(),
+                                    LoginFragment.this.getString(R.string.succesfully_logged_in),
                                     Toast.LENGTH_LONG
                             ).show();
-                            SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
-                            sharedPrefEditor.putString(Constants.USER_EMAIL_ID, email);
-                            sharedPrefEditor.apply();
-                            startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
-                            SignUpFragment.this.getActivity().finish();
+                            editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                            editor.putString(Constants.USER_EMAIL_ID, mEmailField.getText().toString());
+                            editor.apply();
+                            startActivity(new Intent(getContext(), MainActivity.class));
+                            Objects.requireNonNull(getActivity()).finish();
                         } else {
                             Toast.makeText(
-                                    SignUpFragment.this.getContext(),
-                                    SignUpFragment.this.getString(R.string.account_creation_failed),
+                                    LoginFragment.this.getContext(),
+                                    LoginFragment.this.getString(R.string.login_failed),
                                     Toast.LENGTH_LONG
                             ).show();
                             mProgressBarLayout.setVisibility(View.GONE);
-                            signUpButtonTV.setVisibility(View.VISIBLE);
+                            logInButtonTV.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -105,14 +104,6 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private boolean validateForm() {
         boolean valid = true;
-
-        String userName = mUserNameField.getText().toString();
-        if (TextUtils.isEmpty(userName)) {
-            mUserNameField.setError("Required.");
-            valid = false;
-        } else {
-            mUserNameField.setError(null);
-        }
 
         String email = mEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -136,9 +127,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private void initializeViews() {
         mEmailField = view.findViewById(R.id.email_id);
         mPasswordField = view.findViewById(R.id.password);
-        mUserNameField = view.findViewById(R.id.user_name);
         mProgressBarLayout = view.findViewById(R.id.button_progress_bar_layout);
-        mSignUpButton = view.findViewById(R.id.sign_up_cv);
-        signUpButtonTV = view.findViewById(R.id.signup_button_tv);
+        mLogInButton = view.findViewById(R.id.log_in_cv);
+        logInButtonTV = view.findViewById(R.id.log_in_tv);
     }
 }

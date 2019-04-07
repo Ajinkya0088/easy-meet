@@ -18,8 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  */
 public class MeetingsFragment extends Fragment {
 
-    View view;
-    FloatingActionButton createMeetingButton;
+    private View view;
+    private FloatingActionButton createMeetingButton;
 
     public MeetingsFragment() {
         // Required empty public constructor
@@ -31,14 +31,20 @@ public class MeetingsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_meetings, container, false);
-        createMeetingButton = view.findViewById(R.id.create_meeting_button);
-        createMeetingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getContext(), CreateMeetingActivity.class));
-            }
-        });
+        initializeViews();
+        createMeetingButton.setOnClickListener(createMeetingButtonListener);
         return view;
+    }
+
+    private View.OnClickListener createMeetingButtonListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startActivity(new Intent(getContext(), CreateMeetingActivity.class));
+        }
+    };
+
+    private void initializeViews() {
+        createMeetingButton = view.findViewById(R.id.create_meeting_button);
     }
 
 }

@@ -4,15 +4,8 @@ package com.nerds.easymeet;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,36 +14,45 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
+import java.util.Objects;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class LoginFragment extends Fragment implements View.OnClickListener {
+public class SignUpFragment extends Fragment implements View.OnClickListener {
 
     private View view;
-    private EditText mPasswordField, mEmailField;
-    private CardView mLogInButton;
+    private EditText mPasswordField, mEmailField, mUserNameField;
+    private CardView mSignUpButton;
     private LinearLayout mProgressBarLayout;
-    private TextView logInButtonTV;
+    private TextView signUpButtonTV;
     private FirebaseAuth firebaseAuth;
-    private SharedPreferences.Editor editor;
+    private SharedPreferences sharedPref;
+    private String email, password;
 
-    public LoginFragment() {
+    public SignUpFragment() {
         // Required empty public constructor
     }
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_blue_dark));
-        view = inflater.inflate(R.layout.fragment_login, container, false);
+        view = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), android.R.color.holo_orange_dark));
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(getContext());
         initializeViews();
         return view;
     }
@@ -59,7 +61,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     public void onStart() {
         super.onStart();
         firebaseAuth = FirebaseAuth.getInstance();
-        mLogInButton.setOnClickListener(this);
+        mSignUpButton.setOnClickListener(this);
     }
 
     @Override
@@ -68,33 +70,35 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             return;
         }
 
-        logInButtonTV.setVisibility(View.GONE);
+        signUpButtonTV.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.VISIBLE);
 
-        firebaseAuth.signInWithEmailAndPassword(
-                mEmailField.getText().toString(), mPasswordField.getText().toString())
+        email = mEmailField.getText().toString();
+        password = mPasswordField.getText().toString();
+
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.succesfully_logged_in),
+                                    SignUpFragment.this.getContext(),
+                                    SignUpFragment.this.getString(R.string.account_created),
                                     Toast.LENGTH_LONG
                             ).show();
-                            editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                            editor.putString(Constants.USER_EMAIL_ID, mEmailField.getText().toString());
-                            editor.apply();
-                            startActivity(new Intent(getContext(), MainActivity.class));
-                            getActivity().finish();
+                            SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
+                            sharedPrefEditor.putString(Constants.USER_EMAIL_ID, email);
+                            sharedPrefEditor.apply();
+                            startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
+                            Objects.requireNonNull(SignUpFragment.this.getActivity()).finish();
                         } else {
                             Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.login_failed),
+                                    SignUpFragment.this.getContext(),
+                                    SignUpFragment.this.getString(R.string.account_creation_failed),
                                     Toast.LENGTH_LONG
                             ).show();
                             mProgressBarLayout.setVisibility(View.GONE);
-                            logInButtonTV.setVisibility(View.VISIBLE);
+                            signUpButtonTV.setVisibility(View.VISIBLE);
                         }
                     }
                 });
@@ -102,6 +106,14 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
     private boolean validateForm() {
         boolean valid = true;
+
+        String userName = mUserNameField.getText().toString();
+        if (TextUtils.isEmpty(userName)) {
+            mUserNameField.setError("Required.");
+            valid = false;
+        } else {
+            mUserNameField.setError(null);
+        }
 
         String email = mEmailField.getText().toString();
         if (TextUtils.isEmpty(email)) {
@@ -125,8 +137,9 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private void initializeViews() {
         mEmailField = view.findViewById(R.id.email_id);
         mPasswordField = view.findViewById(R.id.password);
+        mUserNameField = view.findViewById(R.id.user_name);
         mProgressBarLayout = view.findViewById(R.id.button_progress_bar_layout);
-        mLogInButton = view.findViewById(R.id.log_in_cv);
-        logInButtonTV = view.findViewById(R.id.log_in_tv);
+        mSignUpButton = view.findViewById(R.id.sign_up_cv);
+        signUpButtonTV = view.findViewById(R.id.signup_button_tv);
     }
 }
