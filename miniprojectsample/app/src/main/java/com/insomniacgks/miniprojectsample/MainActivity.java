@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 .audio(microphoneInputStream)
                 .speakerLabels(true)
                 .contentType(ContentType.OPUS.toString())
-                .interimResults(false)
+                .interimResults(true)
                 .inactivityTimeout(2000)
 //                .model("en-GB_BroadbandModel")
                 .build();
@@ -143,8 +143,9 @@ public class MainActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                SpeechRecognitionResults results = speechToText.recognize(options).execute();
-                System.out.println(results);
+                  speechToText.recognizeUsingWebSocket(options, recognizeCallback);
+//                SpeechRecognitionResults results = speechToText.recognize(options).execute();
+//                System.out.println(results);
             }
         }).start();
 
@@ -169,16 +170,17 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    StringBuilder builder = new StringBuilder();
+
     BaseRecognizeCallback recognizeCallback = new BaseRecognizeCallback() {
         @Override
         public void onTranscription(SpeechRecognitionResults speechResults) {
-            Log.v("result", speechResults.toString());
-            try {
-                Thread.sleep(9000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            result.setText(speechResults.getResults().get(0).getAlternatives().get(0).getTranscript());
+//            Log.v("result", speechResults.toString());
+            Log.d("result", speechResults.toString());
+            Log.v("result", speechResults.getResults().get(0).getAlternatives().get(0).getTranscript());
+
+//            builder.append(speechResults.getResults().get(0).getAlternatives().get(0).getTranscript()+"\n\n");
+//            result.setText(builder.toString());
         }
 
         @Override

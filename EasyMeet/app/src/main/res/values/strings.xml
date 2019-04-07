@@ -17,4 +17,9 @@
     <string name="account_creation_failed">Account creation failed. Please try again later.</string>
     <string name="login_failed">Log in failed. Please try again.</string>
     <string name="succesfully_logged_in">Successfully Logged In.</string>
+    <string name="meeting_title">Title</string>
+    <string name="meeting_description">Description</string>
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="create_new_meeting">Create New Meeting</string>
 </resources>
