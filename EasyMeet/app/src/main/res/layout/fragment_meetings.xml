@@ -7,12 +7,42 @@
     tools:context=".fragments.MeetingsFragment">
 
     <LinearLayout
-        android:id="@+id/progress_bar"
-        android:orientation="vertical"
-        android:gravity="center"
+        android:id="@+id/no_meetings_found_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:scaleType="fitXY"
+            android:src="@drawable/fat_boy_sorry"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="32dp"
+            android:text="@string/no_meetings_found"
+            android:textColor="@android:color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:ignore="SpUsage" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/progress_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="100dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <ProgressBar
             android:layout_width="64dp"
@@ -20,13 +50,13 @@
             android:layout_gravity="center_horizontal" />
 
         <TextView
-            android:textColor="#6D6D6D"
-            android:layout_margin="16dp"
-            android:textStyle="bold"
-            android:textSize="18dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="16dp"
             android:text="@string/loading_meetings"
+            android:textColor="#6D6D6D"
+            android:textSize="18dp"
+            android:textStyle="bold"
             tools:ignore="SpUsage" />
     </LinearLayout>
 

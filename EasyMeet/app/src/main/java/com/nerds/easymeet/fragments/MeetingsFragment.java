@@ -52,7 +52,7 @@ public class MeetingsFragment extends Fragment {
     private ArrayList<MeetingModel> meetings;
     private int count;
     private RecyclerView meetingsRecyclerView;
-    private LinearLayout progressBarLayout;
+    private LinearLayout progressBarLayout, noMeetingsFoundLayout;
 
     public MeetingsFragment() {
         // Required empty public constructor
@@ -92,7 +92,8 @@ public class MeetingsFragment extends Fragment {
 
     private void getMeetingsDetails() {
         if (meetingsIds == null) {
-            //TODO : no meetingsIds message
+            progressBarLayout.setVisibility(View.GONE);
+            noMeetingsFoundLayout.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -140,6 +141,7 @@ public class MeetingsFragment extends Fragment {
         createMeetingButton = view.findViewById(R.id.create_meeting_button);
         meetingsRecyclerView = view.findViewById(R.id.meeting_rv);
         progressBarLayout = view.findViewById(R.id.progress_bar);
+        noMeetingsFoundLayout = view.findViewById(R.id.no_meetings_found_layout);
     }
 
     private class MeetingsAdapter extends RecyclerView.Adapter<MeetingsAdapter.ViewHolder> {
