@@ -1,8 +1,9 @@
 package com.nerds.easymeet;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class MeetingModel {
+public class MeetingModel implements Serializable {
     public String id;
     public String title,description;
     public long timestamp;

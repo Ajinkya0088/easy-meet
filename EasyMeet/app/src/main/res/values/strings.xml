@@ -26,4 +26,10 @@
     <string name="participant_email_id">Participant Email Id</string>
     <string name="meeting_participants">Meeting Participants:</string>
     <string name="add_participant">Add Participant</string>
+    <string name="start_recording">Start Recording</string>
+    <string name="my_meetings">My Meetings</string>
+    <string name="sample_date">13/13/2019</string>
+    <string name="sample_time">10:10</string>
+    <string name="meeting_card_transition">meeting_card</string>
+    <string name="loading_meetings">Loading Meetings…</string>
 </resources>
