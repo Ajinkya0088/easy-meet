@@ -8,4 +8,5 @@
     <color name="create_activity_status_bar_color">#0071B4</color>
     <color name="main_activity_status_bar_color">#DA9A00</color>
     <color name="record_meeting_activity_status_bar_color">#C84336</color>
+    <color name="final_result_activity_status_bar_color">#610088</color>
 </resources>

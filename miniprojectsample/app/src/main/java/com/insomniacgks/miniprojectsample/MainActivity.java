@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         */
         try {
             microphoneInputStream.close();
-            Thread.sleep(6000);
+            Thread.sleep(5000);
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -177,7 +177,8 @@ public class MainActivity extends AppCompatActivity {
         public void onTranscription(SpeechRecognitionResults speechResults) {
 //            Log.v("result", speechResults.toString());
             Log.d("result", speechResults.toString());
-            Log.v("result", speechResults.getResults().get(0).getAlternatives().get(0).getTranscript());
+
+//            Log.v("result", speechResults.getResults().get(0).getAlternatives().get(0).getTranscript());
 
 //            builder.append(speechResults.getResults().get(0).getAlternatives().get(0).getTranscript()+"\n\n");
 //            result.setText(builder.toString());

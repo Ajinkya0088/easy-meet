@@ -32,4 +32,17 @@
     <string name="sample_time">10:10</string>
     <string name="meeting_card_transition">meeting_card</string>
     <string name="loading_meetings">Loading Meetings…</string>
+    <string name="no_meetings_found">No Meetings Found!</string>
+    <string name="stop_recording">Stop Recording</string>
+    <string name="assign_task">Assign Task</string>
+    <string name="assign_task_to">To:</string>
+    <string name="task">Task:</string>
+    <string name="meeting_transcription">Meeting Transcription</string>
+    <string name="sentiment">Sentiment</string>
+    <string name="speaker_labels">Speaker Labels</string>
+    <string name="speaker_0">Speaker 0</string>
+    <string name="description">Meeting Description</string>
+    <string name="title">Meeting Title</string>
+    <string name="keywords">Keywords</string>
+    <string name="creating_meeting_please_wait">Creating meeting, please wait...</string>
 </resources>
