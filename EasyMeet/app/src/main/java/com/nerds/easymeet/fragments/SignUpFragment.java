@@ -1,4 +1,4 @@
-package com.nerds.easymeet;
+package com.nerds.easymeet.fragments;
 
 
 import android.content.Intent;
@@ -23,6 +23,9 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.nerds.easymeet.Constants;
+import com.nerds.easymeet.R;
+import com.nerds.easymeet.activities.MainActivity;
 
 import java.util.Objects;
 

@@ -1,4 +1,4 @@
-package com.nerds.easymeet;
+package com.nerds.easymeet.activities;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +13,10 @@ import android.view.View;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.nerds.easymeet.fragments.LoginFragment;
+import com.nerds.easymeet.R;
+import com.nerds.easymeet.fragments.SignUpFragment;
+import com.nerds.easymeet.fragments.WelcomeFragment;
 
 public class LauncherActivity extends AppCompatActivity {
 

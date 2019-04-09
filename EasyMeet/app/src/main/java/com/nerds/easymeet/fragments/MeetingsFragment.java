@@ -1,7 +1,6 @@
 package com.nerds.easymeet.fragments;
 
 
-import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,13 +19,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.nerds.easymeet.Constants;
 import com.nerds.easymeet.MeetingModel;
 import com.nerds.easymeet.R;
 import com.nerds.easymeet.activities.CreateMeetingActivity;
+import com.nerds.easymeet.activities.FinalMeetingResultActivity;
 import com.nerds.easymeet.activities.RecordMeetingActivity;
 
 import java.util.ArrayList;
@@ -134,6 +133,7 @@ public class MeetingsFragment extends Fragment {
         @Override
         public void onClick(View v) {
             startActivity(new Intent(getContext(), CreateMeetingActivity.class));
+            getActivity().finish();
         }
     };
 
@@ -182,18 +182,16 @@ public class MeetingsFragment extends Fragment {
                 time = itemView.findViewById(R.id.meeting_time);
                 cardView = itemView.findViewById(R.id.meeting_cv);
 
-                cardView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        MeetingModel clickedMeeting = meetings.get(getAdapterPosition());
-                        ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
-                                getActivity(), itemView, getResources().getString(R.string.meeting_card_transition));
-                        Bundle bundle = new Bundle();
-                        bundle.putSerializable(Constants.MEETING_INTENT_EXTRA, clickedMeeting);
-                        Intent intent = new Intent(getContext(), RecordMeetingActivity.class);
-                        intent.putExtras(bundle);
-                        startActivity(intent, options.toBundle());
-                    }
+                cardView.setOnClickListener(v -> {
+                    MeetingModel clickedMeeting = meetings.get(getAdapterPosition());
+                    ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
+                            getActivity(), itemView, getResources().getString(R.string.meeting_card_transition));
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constants.MEETING_INTENT_EXTRA, clickedMeeting);
+                    Intent intent = new Intent(getContext(),
+                            clickedMeeting.getSpeech_to_text() == null ? RecordMeetingActivity.class : FinalMeetingResultActivity.class);
+                    intent.putExtras(bundle);
+                    startActivity(intent, options.toBundle());
                 });
             }
         }
