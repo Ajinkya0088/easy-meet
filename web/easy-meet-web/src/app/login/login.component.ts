@@ -10,10 +10,13 @@ import { AuthService } from  '../auth/auth.service';
 })
 export class LoginComponent implements OnInit {
 
+  
+  public static user_email:String = "";
+
   email= "";
   password = "";
   constructor(private mAuth: AngularFireAuth, private appComponent: AppComponent,private  authService:  AuthService) { 
-
+    
   }
   ngOnInit() {
   }

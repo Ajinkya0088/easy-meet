@@ -3,6 +3,7 @@ import { Router } from  "@angular/router";
 import { auth } from  'firebase/app';
 import { AngularFireAuth } from  "@angular/fire/auth";
 import { User } from  'firebase';
+import { LoginComponent } from '../login/login.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -22,7 +23,7 @@ export class AuthService {
    email=""
    password=""
    async  login() {
-
+     LoginComponent.user_email = this.email;
     try {
         await  this.afAuth.auth.signInWithEmailAndPassword(this.email, this.password)
         this.router.navigate(['/dashboard']);

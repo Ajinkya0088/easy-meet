@@ -12,6 +12,8 @@ import { SummerizeComponent } from './summerize/summerize.component';
 import { SummeryComponent } from './summery/summery.component';
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { FormsModule } from '@angular/forms'
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
 
 @NgModule({
   declarations: [
@@ -21,12 +23,14 @@ import { FormsModule } from '@angular/forms'
     MeetingComponent,
     SummerizeComponent,
     SummeryComponent,
+    MeetingDetailsComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
+    AngularFirestoreModule,
     FormsModule
   ],
   providers: [
