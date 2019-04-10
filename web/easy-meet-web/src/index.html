@@ -1,14 +1,57 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title>EasyMeetWeb</title>
+  <meta charset="utf-8">  <title>EasyMeet</title><link rel="shortcut icon" href="/assets/images/icon.png" />
   <base href="/">
+   <!-- Bootstrap -->
+   <link href="/assets/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+   
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
 </head>
+<style>
+  .footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+    text-align: center;
+  }
+ .setLogo{
+    width: 45px; 
+    height: 35px;
+    border-radius: 30% ;
+    vertical-align: text-top; 
+ }
+ .meetingIMG{
+    width: 70%;
+    height: 35%;
+ }
+</style>
 <body>
-  <app-root></app-root>
+  <div class="header">
+      <div class="container">
+         <div class="row">
+            <div class="col-md-5">
+               <!-- Logo -->
+               <div class="logo">
+                  <h1><img src="/assets/images/meeting.png" class="setLogo"><a href="index.html"> EasyMeet</a></h1>
+               </div>
+            </div>
+         </div>
+      </div>
+    </div>
+
+<app-root></app-root>
+
+<footer class="footer">
+    <div class="container">
+       <div class="copy text-center">
+          Copyright 2019 <a href='#'>EasyMeet</a>
+       </div>
+    </div>
+  </footer>
 </body>
 </html>
