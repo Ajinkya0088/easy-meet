@@ -2,15 +2,17 @@ package com.nerds.easymeet;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Map;
 
 public class MeetingModel implements Serializable {
     public String id;
-    public String title,description;
+    public String title, description;
     public long timestamp;
     public ArrayList<String> participants;
     public String speech_to_text;
+    public Map<String, String> speaker_labels;
     public String summery;
-    public float confidence;
+    public double sentiment;
 
     public String getId() {
         return id;
@@ -68,11 +70,19 @@ public class MeetingModel implements Serializable {
         this.summery = summery;
     }
 
-    public float getConfidence() {
-        return confidence;
+    public double getSentiment() {
+        return sentiment;
     }
 
-    public void setConfidence(float confidence) {
-        this.confidence = confidence;
+    public void setSentiment(double sentiment) {
+        this.sentiment = sentiment;
+    }
+
+    public Map<String, String> getSpeaker_labels() {
+        return speaker_labels;
+    }
+
+    public void setSpeaker_labels(Map<String, String> speaker_labels) {
+        this.speaker_labels = speaker_labels;
     }
 }

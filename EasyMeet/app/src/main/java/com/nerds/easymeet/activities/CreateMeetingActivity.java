@@ -1,9 +1,10 @@
-package com.nerds.easymeet;
+package com.nerds.easymeet.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,9 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nerds.easymeet.Constants;
+import com.nerds.easymeet.MeetingModel;
+import com.nerds.easymeet.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -46,7 +50,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private TimePicker timePicker;
     private View datePickerAlertLayout, timePickerAlertLayout;
     private AlertDialog dateDialog, timeDialog;
-    private String USER_ID, USER_EMAIL;
+    private String USER_EMAIL;
     private RecyclerView participantsRecyclerView;
     private ArrayList<String> participants;
     private LinearLayout addParticipantButton;
@@ -57,6 +61,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private String meetingId;
     private ArrayList<String> finalParticipants;
     private int count;
+    private AlertDialog waitDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +81,9 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
         timePicker.setIs24HourView(true);
 
-        timeTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showTimePickerDialog();
-            }
-        });
+        timeTextView.setOnClickListener(v -> showTimePickerDialog());
 
-        dateTextView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
-            }
-        });
+        dateTextView.setOnClickListener(v -> showDatePickerDialog());
 
         count = 0;
 
@@ -102,6 +97,8 @@ public class CreateMeetingActivity extends AppCompatActivity {
         addParticipantButton.setOnClickListener(addParticipantButtonClickListener);
 
         submitButton.setOnClickListener(submitButtonClickListener);
+
+        createWaitDialog();
 
     }
 
@@ -119,6 +116,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private View.OnClickListener submitButtonClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
+            waitDialog.show();
             String dateTimeStr = dateTextView.getText().toString() + " " + timeTextView.getText().toString();
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.US);
             long timestamp = 0;
@@ -157,10 +155,11 @@ public class CreateMeetingActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(DocumentReference documentReference) {
                             meetingId = documentReference.getId();
+                            firestore.collection(Constants.MEETING_COLLECTION)
+                                    .document(meetingId)
+                                    .update("id", meetingId);
                             addMeetingToParticipants();
-                            Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(CreateMeetingActivity.this, RecordMeetingActivity.class));
-                            finish();
+//                            Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
                         }
                     });
         }
@@ -184,7 +183,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
                                                 count++;
                                                 if (count == finalParticipants.size()) {
                                                     Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(CreateMeetingActivity.this, RecordMeetingActivity.class));
+                                                    startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
                                                     finish();
                                                 }
                                             }
@@ -198,7 +197,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
                                                 count++;
                                                 if (count == finalParticipants.size()) {
                                                     Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(CreateMeetingActivity.this, RecordMeetingActivity.class));
+                                                    startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
                                                     finish();
                                                 }
                                             }
@@ -280,7 +279,16 @@ public class CreateMeetingActivity extends AppCompatActivity {
         timeDialog.show();
     }
 
+    private void createWaitDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setView(LayoutInflater.from(this).inflate(R.layout.creating_meeting_dialog_layout, null));
+        waitDialog = builder.create();
+        waitDialog.setCancelable(false);
+        waitDialog.setCanceledOnTouchOutside(false);
+    }
+
     private class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ViewHolder> {
+
 
         @NonNull
         @Override
@@ -301,8 +309,8 @@ public class CreateMeetingActivity extends AppCompatActivity {
         public int getItemCount() {
             return participants.size();
         }
-
         class ViewHolder extends RecyclerView.ViewHolder {
+
             TextView SrNo;
             EditText participantEmailEditText;
 

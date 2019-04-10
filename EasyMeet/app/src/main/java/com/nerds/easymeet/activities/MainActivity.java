@@ -20,6 +20,5 @@ public class MainActivity extends AppCompatActivity {
         transaction.setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out);
         transaction.replace(R.id.main_activity_fl, new MeetingsFragment());
         transaction.commitAllowingStateLoss();
-
     }
 }
