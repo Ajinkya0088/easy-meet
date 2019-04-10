@@ -14,6 +14,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth'
 import { FormsModule } from '@angular/forms'
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
+import { MeetingsTableComponent } from './meetings-table/meetings-table.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MeetingDetailsComponent } from './meeting-details/meeting-details.compo
     SummerizeComponent,
     SummeryComponent,
     MeetingDetailsComponent,
+    MeetingsTableComponent,
   ],
   imports: [
     BrowserModule,

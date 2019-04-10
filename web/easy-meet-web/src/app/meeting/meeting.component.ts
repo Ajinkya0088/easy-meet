@@ -9,6 +9,8 @@ import { LoginComponent } from '../login/login.component';
 })
 export class MeetingComponent implements OnInit {
 
+  componentOption:boolean = false;
+
   constructor(private  authService:  AuthService, private fire : AngularFirestore) {
 
   }
@@ -21,5 +23,9 @@ export class MeetingComponent implements OnInit {
     this.fire.collection("users").doc("adityapingle90@gmail.com").get().subscribe(result=>{
       console.log(result);
     })
+  }
+
+  changeComponent(){
+    this.componentOption = !this.componentOption;
   }
 }

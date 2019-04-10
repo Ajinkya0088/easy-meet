@@ -2,74 +2,39 @@
 
   <div class="row">
     <div class="col-md-2">
-        <div class="sidebar content-box" style="display: block;">
-                <ul class="nav">
-                    <!-- Main menu -->
-                    <li class="current"><a href="/dashboard"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
-                    <li><a href="/meeting"><i class="glyphicon glyphicon-list"></i>Meetings</a></li>
-                    <li><a href="/summerize"><i class="glyphicon glyphicon-sound-stereo"></i>Tasks</a></li>
-                    <!-- <li><a href="/calendar"><i class="glyphicon glyphicon-calendar"></i> Events</a></li> -->
-                    <li><a href="/" (click)="authService.logout()"><i class="glyphicon glyphicon-log-out"></i> log out</a></li><!-- LOG OUT PAGE -->
-                </ul>
-        </div>
-    </div>
-      
-      
-<div class="row">
-    <div class="col-md-8">
-      <div class="content-box-large">
-        <div class="panel-heading">
-        <div class="panel-title">All Available Meetings:</div>
-        
-        <div class="panel-options">
-          <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-          <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-        </div>
+      <div class="sidebar content-box" style="display: block;">
+        <ul class="nav">
+          <!-- Main menu -->
+          <li class="current"><a href="/dashboard"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
+          <li><a href="/meeting"><i class="glyphicon glyphicon-list"></i>Meetings</a></li>
+          <li><a href="/summerize"><i class="glyphicon glyphicon-sound-stereo"></i>Tasks</a></li>
+          <!-- <li><a href="/calendar"><i class="glyphicon glyphicon-calendar"></i> Events</a></li> -->
+          <li><a href="/" (click)="authService.logout()"><i class="glyphicon glyphicon-log-out"></i> log out</a></li>
+          <!-- LOG OUT PAGE -->
+        </ul>
       </div>
-        <div class="panel-body">
-          <table class="table">
-                <thead>
-                  <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Agenda</th>
-                    <th>Date of Conduction</th>
-                    <th>Time Left For Meeting</th>
-                    <th>Created By</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr class="success">
-                    <td>1</td>
-                    <td>Ionic framwork discussion</td>
-                    <td>1.Discuss various Software Where Project Can Build<br>2.How many Os Should support </td>
-                    <td>23 March 2019 </td>
-                    <td>2 day</td>
-                    <td>Ms Dhoni</td>
-                  </tr>
-                  <tr class="danger">
-                    <td>2</td>
-                    <td>Demo Meet</td>
-                    <td>Discuession On loss of company </td>
-                    <td>24 March 2019 </td>
-                    <td>3 day</td>
-                    <td>Rohit Sharma</td>
-                  </tr>
-                  <tr class="warning">
-                    <td>3</td>
-                    <td>How to Win Ipl</td>
-                    <td>Which playing 11 should be there</td>
-                    <td>23 March 2019</td>
-                    <td>2 day</td>
-                    <td>Virat Kholi</td>
-                  </tr>
-                </tbody>
-              </table>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-8">
+        <div class="content-box-large">
+          <div class="panel-heading">
+            <div class="panel-title">All Available Meetings:</div>
+
+            <div class="panel-options">
+              <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
+              <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
+            </div>
+          </div>
+          <div class="panel-body">
+            <app-meeting-details *ngIf="componentOption; showMeetingsTable"></app-meeting-details>
+            <ng-template #showMeetingsTable>
+              <app-meetings-table></app-meetings-table>
+            </ng-template>
+          </div>
         </div>
       </div>
     </div>
   </div>
-
-  <app-meeting-details></app-meeting-details>
-</div>
 </div>
