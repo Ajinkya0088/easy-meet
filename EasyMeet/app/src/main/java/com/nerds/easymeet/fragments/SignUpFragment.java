@@ -19,12 +19,11 @@ import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.nerds.easymeet.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.nerds.easymeet.data.Constants;
 import com.nerds.easymeet.R;
+import com.nerds.easymeet.data.User;
 import com.nerds.easymeet.activities.MainActivity;
 
 import java.util.Objects;
@@ -42,7 +41,8 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     private TextView signUpButtonTV;
     private FirebaseAuth firebaseAuth;
     private SharedPreferences sharedPref;
-    private String email, password;
+    private String email, password, name;
+    private String userId;
 
     public SignUpFragment() {
         // Required empty public constructor
@@ -76,33 +76,43 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         signUpButtonTV.setVisibility(View.GONE);
         mProgressBarLayout.setVisibility(View.VISIBLE);
 
+        name = mUserNameField.getText().toString();
         email = mEmailField.getText().toString();
         password = mPasswordField.getText().toString();
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(
-                                    SignUpFragment.this.getContext(),
-                                    SignUpFragment.this.getString(R.string.account_created),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
-                            sharedPrefEditor.putString(Constants.USER_EMAIL_ID, email);
-                            sharedPrefEditor.apply();
-                            startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
-                            Objects.requireNonNull(SignUpFragment.this.getActivity()).finish();
-                        } else {
-                            Toast.makeText(
-                                    SignUpFragment.this.getContext(),
-                                    SignUpFragment.this.getString(R.string.account_creation_failed),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            mProgressBarLayout.setVisibility(View.GONE);
-                            signUpButtonTV.setVisibility(View.VISIBLE);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(
+                                SignUpFragment.this.getContext(),
+                                SignUpFragment.this.getString(R.string.account_created),
+                                Toast.LENGTH_LONG
+                        ).show();
+                        User user = new User("", name, email);
+                        FirebaseFirestore.getInstance().collection(Constants.USERS_COLLECTION)
+                                .add(user)
+                                .addOnSuccessListener(documentReference -> {
+                                    userId = documentReference.getId();
+                                    FirebaseFirestore.getInstance().collection(Constants.USERS_COLLECTION)
+                                            .document(userId)
+                                            .update("id", userId);
+                                    SharedPreferences.Editor sharedPrefEditor = sharedPref.edit();
+                                    sharedPrefEditor.putString(Constants.USER_ID, userId);
+                                    sharedPrefEditor.putString(Constants.USER_EMAIL_ID, email);
+                                    sharedPrefEditor.putString(Constants.USER_NAME, name);
+                                    sharedPrefEditor.apply();
+                                    startActivity(new Intent(SignUpFragment.this.getContext(), MainActivity.class));
+                                    Objects.requireNonNull(SignUpFragment.this.getActivity()).finish();
+                                });
+
+                    } else {
+                        Toast.makeText(
+                                SignUpFragment.this.getContext(),
+                                SignUpFragment.this.getString(R.string.account_creation_failed),
+                                Toast.LENGTH_LONG
+                        ).show();
+                        mProgressBarLayout.setVisibility(View.GONE);
+                        signUpButtonTV.setVisibility(View.VISIBLE);
                     }
                 });
     }

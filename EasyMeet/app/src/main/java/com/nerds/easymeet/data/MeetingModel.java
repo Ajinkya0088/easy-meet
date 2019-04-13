@@ -1,4 +1,4 @@
-package com.nerds.easymeet;
+package com.nerds.easymeet.data;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class MeetingModel implements Serializable {
     public String id;
+    public String creater_id;
     public String title, description;
     public long timestamp;
     public ArrayList<String> participants;
@@ -13,6 +14,7 @@ public class MeetingModel implements Serializable {
     public Map<String, String> speaker_labels;
     public String summery;
     public double sentiment;
+
 
     public String getId() {
         return id;
@@ -84,5 +86,13 @@ public class MeetingModel implements Serializable {
 
     public void setSpeaker_labels(Map<String, String> speaker_labels) {
         this.speaker_labels = speaker_labels;
+    }
+
+    public String getCreater_id() {
+        return creater_id;
+    }
+
+    public void setCreater_id(String creater_id) {
+        this.creater_id = creater_id;
     }
 }

@@ -1,11 +1,13 @@
 package com.nerds.easymeet.activities;
 
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -14,6 +16,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.NaturalLanguageUnderstanding;
@@ -23,10 +26,10 @@ import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.Fe
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsOptions;
 import com.ibm.watson.developer_cloud.natural_language_understanding.v1.model.KeywordsResult;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
-import com.nerds.easymeet.Constants;
-import com.nerds.easymeet.MeetingModel;
+import com.nerds.easymeet.data.Constants;
+import com.nerds.easymeet.data.MeetingModel;
 import com.nerds.easymeet.R;
-import com.nerds.easymeet.Task;
+import com.nerds.easymeet.data.Task;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,7 +42,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
 
     private MeetingModel meeting;
     private RecyclerView participants_rv, speaker_labels_rv;
-    private TextView date, time, title, desc, sentiment, transciption, keywords_tv;
+    private TextView date, time, title, desc, sentiment, transciption, keywords_tv, creater_tv;
     private StringBuilder keywords;
     private Double sentimentSum, sentimentMean;
     private int keywordsCount;
@@ -63,9 +66,12 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
             new Thread(this::getSummary).start();
         } else {
             sentimentMean = meeting.getSentiment();
-            sentiment.setText(String.format("%s %s", sentimentMean < 0 ? "Negative" : "Positive", String.valueOf(sentimentMean)));
+            sentiment.setText(String.format("%s: %s", sentimentMean < 0 ? "Negative" : "Positive", String.valueOf(sentimentMean)));
             keywords_tv.setText(meeting.getSummery());
         }
+
+        getCreator();
+
         Calendar calendar = Calendar.getInstance(Locale.US);
         calendar.setTimeInMillis(meeting.getTimestamp());
         date.setText(android.text.format.DateFormat.format("dd/MM/yyyy", calendar));
@@ -77,6 +83,15 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
         participants_rv.setAdapter(new ParticipantsAdapter());
         speaker_labels_rv.setLayoutManager(new LinearLayoutManager(this));
         speaker_labels_rv.setAdapter(new SpeakerLabelsAdapter());
+    }
+
+    private void getCreator() {
+        FirebaseFirestore.getInstance().collection(Constants.USERS_COLLECTION)
+                .document(meeting.getCreater_id())
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    creater_tv.setText(String.format("Created By %s", documentSnapshot.getData().get("name").toString()));
+                });
     }
 
     private void getSummary() {
@@ -143,6 +158,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
         speaker_labels_rv = findViewById(R.id.speaker_labels_rv);
         transciption = findViewById(R.id.meeting_transciption);
         keywords_tv = findViewById(R.id.keywords);
+        creater_tv = findViewById(R.id.creator_text_view);
     }
 
     private class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ViewHolder> {
@@ -187,13 +203,28 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
                             .get()
                             .addOnSuccessListener(documentSnapshot -> {
                                 Map<String, Object> tasks = documentSnapshot.getData();
+                                OnSuccessListener<Void> successListener = aVoid -> {
+                                    Toast.makeText(FinalMeetingResultActivity.this, "Task assigned to " + emailId, Toast.LENGTH_LONG).show();
+                                };
                                 if (tasks == null) {
                                     tasks = new HashMap<>();
-                                    tasks.put("0", new Task(meeting.getId(), task.getText().toString()));
-                                    taskColl.document(emailId).set(tasks);
+                                    tasks.put("0", new Task(
+                                            meeting.getId(),
+                                            task.getText().toString(),
+                                            PreferenceManager.getDefaultSharedPreferences(FinalMeetingResultActivity.this).getString(Constants.USER_ID, ""),
+                                            false));
+                                    taskColl.document(emailId).set(tasks)
+                                            .addOnSuccessListener(successListener);
                                 } else {
 //                                    tasks.put();
-                                    taskColl.document(emailId).update(String.valueOf(tasks.size()), new Task(meeting.getId(), task.getText().toString()));
+                                    taskColl.document(emailId).update(
+                                            String.valueOf(tasks.size()),
+                                            new Task(
+                                                    meeting.getId(),
+                                                    task.getText().toString(),
+                                                    PreferenceManager.getDefaultSharedPreferences(FinalMeetingResultActivity.this).getString(Constants.USER_ID, ""),
+                                                    false))
+                                            .addOnSuccessListener(successListener);
                                 }
                             });
                 });

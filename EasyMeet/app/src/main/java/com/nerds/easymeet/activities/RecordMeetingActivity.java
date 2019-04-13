@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.content.ContextCompat;
@@ -19,10 +20,10 @@ import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeakerLabelsResul
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechRecognitionResults;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechTimestamp;
 import com.ibm.watson.developer_cloud.speech_to_text.v1.websocket.RecognizeCallback;
-import com.nerds.easymeet.Constants;
-import com.nerds.easymeet.MeetingModel;
+import com.nerds.easymeet.data.Constants;
+import com.nerds.easymeet.data.MeetingModel;
 import com.nerds.easymeet.R;
-import com.nerds.easymeet.Speaker;
+import com.nerds.easymeet.data.Speaker;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,8 +79,14 @@ public class RecordMeetingActivity extends AppCompatActivity {
 
         speechTimestamps = new ArrayList<>();
         speakers = new ArrayList<>();
-        speakersTranscripts = new HashMap<String, String>();
+        speakersTranscripts = new HashMap<>();
 
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private View.OnClickListener recordButtonClickListener = new View.OnClickListener() {
@@ -216,7 +223,7 @@ public class RecordMeetingActivity extends AppCompatActivity {
                 } else break;
             }
             speakersTranscripts.put(String.valueOf(speakerLabel),
-                    speakersTranscripts.get(String.valueOf(speakerLabel))== null ?
+                    speakersTranscripts.get(String.valueOf(speakerLabel)) == null ?
                             stringBuilder.toString().replace("  ", " ") :
                             (speakersTranscripts.get(String.valueOf(speakerLabel)) + " " + stringBuilder.toString())
                                     .replace("  ", " "));

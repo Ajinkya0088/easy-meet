@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBarTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
-        <activity android:name=".activities.FinalMeetingResultActivity"></activity>
+        <activity android:name=".activities.TaskDetailActivity"></activity>
+        <activity android:name=".activities.FinalMeetingResultActivity" />
         <activity android:name=".activities.RecordMeetingActivity" />
         <activity android:name=".activities.CreateMeetingActivity" />
         <activity android:name=".activities.MainActivity" />
@@ -22,11 +23,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <service
+            android:name=".NewTaskService"
+            android:enabled="true"
+            android:exported="true" />
+        <service
+            android:name=".NewMeetingService"
+            android:enabled="true"
+            android:exported="true" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
 </manifest>

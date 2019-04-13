@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +24,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.nerds.easymeet.Constants;
-import com.nerds.easymeet.MeetingModel;
+import com.nerds.easymeet.data.Constants;
+import com.nerds.easymeet.data.MeetingModel;
 import com.nerds.easymeet.R;
 
 import java.text.DateFormat;
@@ -50,7 +47,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private TimePicker timePicker;
     private View datePickerAlertLayout, timePickerAlertLayout;
     private AlertDialog dateDialog, timeDialog;
-    private String USER_EMAIL;
+    private String USER_EMAIL, USER_ID;
     private RecyclerView participantsRecyclerView;
     private ArrayList<String> participants;
     private LinearLayout addParticipantButton;
@@ -73,6 +70,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         USER_EMAIL = sharedPreferences.getString(Constants.USER_EMAIL_ID, "");
+        USER_ID = sharedPreferences.getString(Constants.USER_ID, "");
 
         firestore = FirebaseFirestore.getInstance();
 
@@ -147,64 +145,61 @@ public class CreateMeetingActivity extends AppCompatActivity {
             newMeeting.setTimestamp(timestamp);
             newMeeting.setTitle(titleTextView.getText().toString());
             newMeeting.setDescription(descriptionTextView.getText().toString());
+            newMeeting.setCreater_id(USER_ID);
             newMeeting.setParticipants(finalParticipants);
 
             firestore.collection(Constants.MEETING_COLLECTION)
                     .add(newMeeting)
-                    .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                        @Override
-                        public void onSuccess(DocumentReference documentReference) {
-                            meetingId = documentReference.getId();
-                            firestore.collection(Constants.MEETING_COLLECTION)
-                                    .document(meetingId)
-                                    .update("id", meetingId);
-                            addMeetingToParticipants();
+                    .addOnSuccessListener(documentReference -> {
+                        meetingId = documentReference.getId();
+                        firestore.collection(Constants.MEETING_COLLECTION)
+                                .document(meetingId)
+                                .update("id", meetingId);
+                        addMeetingToParticipants();
 //                            Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                        }
                     });
         }
     };
 
     private void addMeetingToParticipants() {
         for (final String participant : finalParticipants) {
-            final CollectionReference reference = firestore.collection(Constants.USERS_COLLECTION);
+            final CollectionReference reference = firestore.collection(Constants.USERS_MEETINGS_COLLECTION);
             reference.document(participant)
                     .get()
-                    .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-                            Map<String, Object> update = new HashMap<>();
-                            if (documentSnapshot.getData() == null) {
-                                update.put("0", meetingId);
-                                reference.document(participant).set(update)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                count++;
-                                                if (count == finalParticipants.size()) {
-                                                    Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
-                                                    finish();
-                                                }
+                    .addOnSuccessListener(documentSnapshot -> {
+                        Map<String, Object> update = new HashMap<>();
+                        if (documentSnapshot.getData() == null) {
+                            update.put("0", meetingId);
+                            reference.document(participant).set(update)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            count++;
+                                            if (count == finalParticipants.size()) {
+                                                waitDialog.dismiss();
+                                                Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
+                                                startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
+                                                finish();
                                             }
-                                        });
-                            } else {
-                                update.put(String.valueOf(documentSnapshot.getData().size()), meetingId);
-                                reference.document(participant).update(update)
-                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                            @Override
-                                            public void onSuccess(Void aVoid) {
-                                                count++;
-                                                if (count == finalParticipants.size()) {
-                                                    Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
-                                                    startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
-                                                    finish();
-                                                }
+                                        }
+                                    });
+                        } else {
+                            update.put(String.valueOf(documentSnapshot.getData().size()), meetingId);
+                            reference.document(participant).update(update)
+                                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            count++;
+                                            if (count == finalParticipants.size()) {
+                                                Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
+                                                waitDialog.dismiss();
+                                                startActivity(new Intent(CreateMeetingActivity.this, MainActivity.class));
+                                                finish();
                                             }
-                                        });
-                            }
-
+                                        }
+                                    });
                         }
+
                     });
         }
     }
@@ -309,6 +304,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         public int getItemCount() {
             return participants.size();
         }
+
         class ViewHolder extends RecyclerView.ViewHolder {
 
             TextView SrNo;

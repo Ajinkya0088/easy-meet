@@ -9,4 +9,5 @@
     <color name="main_activity_status_bar_color">#DA9A00</color>
     <color name="record_meeting_activity_status_bar_color">#C84336</color>
     <color name="final_result_activity_status_bar_color">#610088</color>
+    <color name="c">#00C853</color>
 </resources>

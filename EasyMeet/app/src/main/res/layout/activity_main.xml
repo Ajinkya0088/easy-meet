@@ -20,8 +20,14 @@
         <androidx.appcompat.widget.Toolbar
             android:background="#FFC107"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            app:title="@string/my_meetings" />
+            android:layout_height="?actionBarSize">
+            <Spinner
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:id="@+id/main_activity_options_spinner"
+                android:layout_width="180dp"
+                android:layout_height="match_parent"/>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
 </RelativeLayout>

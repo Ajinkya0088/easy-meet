@@ -38,11 +38,23 @@
     <string name="assign_task_to">To:</string>
     <string name="task">Task:</string>
     <string name="meeting_transcription">Meeting Transcription</string>
-    <string name="sentiment">Sentiment</string>
+    <string name="loading_sentiment">Loading Sentiment…</string>
     <string name="speaker_labels">Speaker Labels</string>
     <string name="speaker_0">Speaker 0</string>
     <string name="description">Meeting Description</string>
     <string name="title">Meeting Title</string>
+    <string name="loading_keywords">Loading Keywords…</string>
+    <string name="creating_meeting_please_wait">Creating meeting, please wait…</string>
+    <string name="creator">Creator</string>
+    <string name="sentiment">Sentiment</string>
     <string name="keywords">Keywords</string>
-    <string name="creating_meeting_please_wait">Creating meeting, please wait...</string>
+    <string name="channel_name">New Meeting</string>
+    <string name="channel_description">Notify user about new meetings</string>
+    <string name="assigned_to_me">Assigned To Me</string>
+    <string name="assigned_by_me">Assigned By Me</string>
+
+    <string-array name="spinner_options">
+        <item>My Meetings</item>
+        <item>Tasks</item>
+    </string-array>
 </resources>

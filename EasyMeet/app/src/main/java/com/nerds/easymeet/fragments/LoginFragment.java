@@ -4,12 +4,6 @@ package com.nerds.easymeet.fragments;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,12 +14,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.nerds.easymeet.Constants;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.nerds.easymeet.data.Constants;
 import com.nerds.easymeet.R;
+import com.nerds.easymeet.data.User;
 import com.nerds.easymeet.activities.MainActivity;
 
 import java.util.Objects;
@@ -43,6 +40,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     private TextView logInButtonTV;
     private FirebaseAuth firebaseAuth;
     private SharedPreferences.Editor editor;
+    private User user;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -77,29 +75,34 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
 
         firebaseAuth.signInWithEmailAndPassword(
                 mEmailField.getText().toString(), mPasswordField.getText().toString())
-                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.succesfully_logged_in),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
-                            editor.putString(Constants.USER_EMAIL_ID, mEmailField.getText().toString());
-                            editor.apply();
-                            startActivity(new Intent(getContext(), MainActivity.class));
-                            Objects.requireNonNull(getActivity()).finish();
-                        } else {
-                            Toast.makeText(
-                                    LoginFragment.this.getContext(),
-                                    LoginFragment.this.getString(R.string.login_failed),
-                                    Toast.LENGTH_LONG
-                            ).show();
-                            mProgressBarLayout.setVisibility(View.GONE);
-                            logInButtonTV.setVisibility(View.VISIBLE);
-                        }
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(
+                                LoginFragment.this.getContext(),
+                                LoginFragment.this.getString(R.string.succesfully_logged_in),
+                                Toast.LENGTH_LONG
+                        ).show();
+                        FirebaseFirestore.getInstance().collection(Constants.USERS_COLLECTION)
+                                .whereEqualTo("email", mEmailField.getText().toString())
+                                .addSnapshotListener((queryDocumentSnapshots, e) -> {
+                                    user = queryDocumentSnapshots.getDocuments().get(0).toObject(User.class);
+                                    editor = PreferenceManager.getDefaultSharedPreferences(getContext()).edit();
+                                    editor.putString(Constants.USER_EMAIL_ID, mEmailField.getText().toString());
+                                    editor.putString(Constants.USER_NAME, user.getName());
+                                    editor.putString(Constants.USER_ID, user.getId());
+                                    editor.apply();
+                                    startActivity(new Intent(getContext(), MainActivity.class));
+                                    Objects.requireNonNull(getActivity()).finish();
+                                });
+
+                    } else {
+                        Toast.makeText(
+                                LoginFragment.this.getContext(),
+                                LoginFragment.this.getString(R.string.login_failed),
+                                Toast.LENGTH_LONG
+                        ).show();
+                        mProgressBarLayout.setVisibility(View.GONE);
+                        logInButtonTV.setVisibility(View.VISIBLE);
                     }
                 });
     }

@@ -1,4 +1,4 @@
-package com.nerds.easymeet;
+package com.nerds.easymeet.data;
 
 public class Speaker {
     public Long id;

@@ -36,25 +36,14 @@ public class LauncherActivity extends AppCompatActivity {
         super.onStart();
         final FirebaseUser currentUser = firebaseAuth.getCurrentUser();
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                if (currentUser != null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            startActivity(new Intent(LauncherActivity.this, MainActivity.class));
-                            finish();
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showNoAccountFoundAlert();
-                        }
-                    });
-                }
+        new Handler().postDelayed(() -> {
+            if (currentUser != null) {
+                runOnUiThread(() -> {
+                    startActivity(new Intent(LauncherActivity.this, MainActivity.class));
+                    finish();
+                });
+            } else {
+                runOnUiThread(this::showNoAccountFoundAlert);
             }
         }, 2000);
 
@@ -67,19 +56,13 @@ public class LauncherActivity extends AppCompatActivity {
         builder.setView(view);
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-        view.findViewById(R.id.sign_up_cv).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                changeFragment(new SignUpFragment());
-            }
+        view.findViewById(R.id.sign_up_cv).setOnClickListener(v -> {
+            alertDialog.dismiss();
+            changeFragment(new SignUpFragment());
         });
-        view.findViewById(R.id.log_in_cv).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                alertDialog.dismiss();
-                changeFragment(new LoginFragment());
-            }
+        view.findViewById(R.id.log_in_cv).setOnClickListener(v -> {
+            alertDialog.dismiss();
+            changeFragment(new LoginFragment());
         });
     }
 

@@ -21,8 +21,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.nerds.easymeet.Constants;
-import com.nerds.easymeet.MeetingModel;
+import com.nerds.easymeet.data.Constants;
+import com.nerds.easymeet.data.MeetingModel;
 import com.nerds.easymeet.R;
 import com.nerds.easymeet.activities.CreateMeetingActivity;
 import com.nerds.easymeet.activities.FinalMeetingResultActivity;
@@ -31,7 +31,6 @@ import com.nerds.easymeet.activities.RecordMeetingActivity;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -73,7 +72,7 @@ public class MeetingsFragment extends Fragment {
         count = 0;
 
         db = FirebaseFirestore.getInstance();
-        db.collection(Constants.USERS_COLLECTION)
+        db.collection(Constants.USERS_MEETINGS_COLLECTION)
                 .document(USER_EMAIL)
                 .get()
                 .addOnSuccessListener(getMeetingsSuccessListener);
@@ -112,12 +111,7 @@ public class MeetingsFragment extends Fragment {
                     meetings.add(documentSnapshot.toObject(MeetingModel.class));
                     count++;
                     if (count == meetingsIds.size()) {
-                        Collections.sort(meetings, new Comparator<MeetingModel>() {
-                            @Override
-                            public int compare(MeetingModel o1, MeetingModel o2) {
-                                return o1.getTimestamp() > o2.getTimestamp() ? 1 : 0;
-                            }
-                        });
+                        Collections.sort(meetings, (o1, o2) -> o1.getTimestamp() > o2.getTimestamp() ? 1 : 0);
                         setMeetingsAdapter();
                     }
                 }
