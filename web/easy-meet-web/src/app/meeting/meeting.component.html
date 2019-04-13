@@ -7,28 +7,18 @@
           <!-- Main menu -->
           <li class="current"><a href="/dashboard"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
           <li><a href="/meeting"><i class="glyphicon glyphicon-list"></i>Meetings</a></li>
-          <li><a href="/summerize"><i class="glyphicon glyphicon-sound-stereo"></i>Tasks</a></li>
+          <li><a href="/user"><i class="glyphicon glyphicon-sound-stereo"></i>Users</a></li>
           <!-- <li><a href="/calendar"><i class="glyphicon glyphicon-calendar"></i> Events</a></li> -->
           <li><a href="/" (click)="authService.logout()"><i class="glyphicon glyphicon-log-out"></i> log out</a></li>
           <!-- LOG OUT PAGE -->
         </ul>
       </div>
     </div>
-
-
-    <div class="row">
-      <div class="col-md-8">
+  <div class="row">
+      <div class="col-md-9">
         <div class="content-box-large">
-          <div class="panel-heading">
-            <div class="panel-title">All Available Meetings:</div>
-
-            <div class="panel-options">
-              <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
-              <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
-            </div>
-          </div>
           <div class="panel-body">
-            <app-meeting-details *ngIf="componentOption; showMeetingsTable"></app-meeting-details>
+            <app-meeting-details *ngIf="click.componentOption; else showMeetingsTable"></app-meeting-details>
             <ng-template #showMeetingsTable>
               <app-meetings-table></app-meetings-table>
             </ng-template>
