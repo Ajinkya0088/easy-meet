@@ -1,11 +1,9 @@
 
-
-     <div class="col-md-10">
       <div class="row">
           <div class="col-md-8">
-              <div class="content-box-large">
+              <div class="content-box-header">
                   <div class="panel-heading">
-                      <div class="panel-title"><h3>Summary For *TITLE OF Meeting *</h3></div>
+                      <div class="panel-title"><h3>Title:{{click.meeting.title}}</h3></div>
                       
                       <div class="panel-options">
                           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -13,11 +11,20 @@
                       </div>
                   </div>
                   <div class="panel-body" >
-                      <p style="text-align:justify">
-                      Our platform consists of dedicated conference applications and CMS Panel for the organizer, where he manages the entire content of the application and can send a PUSH notifications to all participants at any time. CMS panel gives almost unlimited possibilities to modify the content of the app and allows to change it at any time, even during the event.
+                      Date & Time:{{click.meeting.timestamp | date:'dd/MM/yyyy HH:mm'}}
+                      <BR><BR>
+                      Description:{{click.meeting.description}}
+                      <BR><BR>
+                      Keyword:{{click.meeting.summery}}
                       <br><br>
-                      Participants have access to a native mobile applications with all the necessary information. From agendas to social widgets and our own fully-featured networking solution!
-                      </p>
+                      Sentiment:{{click.meeting.sentiment}}
+                      <br><br>
+                      Meeting Presentation:<BR>{{click.meeting.speech_to_text}}
+                      <br><br>
+                      Speaker labels:
+                      <div *ngFor="let label of click.meeting.speaker_labels">
+                        {{label}}
+                      </div>
                   </div>
               </div>
           </div>
@@ -33,12 +40,9 @@
                               <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
                           </div>
                       </div>
-                      <div class="content-box-large box-with-header">
-                          <h5>
-                          Speker1:ABCD<hr>
-                          Speker2:EFGH<hr>
-                          Speker3:PQRS<hr>
-                          Speker4:XYZ<hr>
+                      <div class="content-box-large box-with-header" >
+                          <h5 *ngFor="let p of click.meeting.participants">
+                            {{p}}<hr>
                           </h5>
                           <br /><br />
                       </div>
@@ -47,5 +51,4 @@
               
           </div>
       </div>
-
-  </div>    
+<h4><i class="glyphicon glyphicon-arrow-left" (click)="click.changeComponent()"  style="cursor:pointer"><BR> Back</i></h4>

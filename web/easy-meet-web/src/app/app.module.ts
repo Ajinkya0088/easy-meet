@@ -8,13 +8,13 @@ import { environment } from 'src/environments/environment.prod';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { MeetingComponent } from './meeting/meeting.component';
-import { SummerizeComponent } from './summerize/summerize.component';
-import { SummeryComponent } from './summery/summery.component';
 import { AngularFireAuthModule } from '@angular/fire/auth'
 import { FormsModule } from '@angular/forms'
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { MeetingDetailsComponent } from './meeting-details/meeting-details.component';
 import { MeetingsTableComponent } from './meetings-table/meetings-table.component';
+import { TaskComponent } from './task/task.component';
+import { UserComponent } from './user/user.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +22,10 @@ import { MeetingsTableComponent } from './meetings-table/meetings-table.componen
     LoginComponent,
     DashboardComponent,
     MeetingComponent,
-    SummerizeComponent,
-    SummeryComponent,
     MeetingDetailsComponent,
     MeetingsTableComponent,
+    TaskComponent,
+    UserComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,7 +33,7 @@ import { MeetingsTableComponent } from './meetings-table/meetings-table.componen
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireAuthModule,
     AngularFirestoreModule,
-    FormsModule
+    FormsModule 
   ],
   providers: [
   ],

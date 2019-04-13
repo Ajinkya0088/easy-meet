@@ -7,7 +7,7 @@
                     <!-- Main menu -->
                     <li class="current"><a href="/dashboard"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
                     <li><a href="/meeting"><i class="glyphicon glyphicon-list"></i>Meetings</a></li>
-                    <li><a href="/summerize"><i class="glyphicon glyphicon-sound-stereo"></i>Tasks</a></li>
+                    <li><a href="/user"><i class="glyphicon glyphicon-sound-stereo"></i>Users</a></li>
                     <!-- <li><a href="/calendar"><i class="glyphicon glyphicon-calendar"></i> Events</a></li> -->
                     <li><a href="/" (click)="authService.logout()"><i class="glyphicon glyphicon-log-out"></i> log out</a></li><!-- LOG OUT PAGE -->
                 </ul>
@@ -53,12 +53,11 @@
             <a href="#" data-rel="reload"><i class="glyphicon glyphicon-cog"></i></a>
           </div>
           </div>
-          <div class="content-box-large box-with-header">
-            
-            -------<br>
-                          -------<br>
-                          -------<br>
-          <br /><br />
+          <div class="content-box-large box-with-header" >
+            <div *ngFor="let meeting of meetingArray | slice:0:3">
+            <h5>{{meeting.title}}  || {{meeting.timestamp |date: 'dd/MM/yyyy HH:MM'}}</h5>
+            <HR>
+            </div>
         </div>
         </div>
       </div>

@@ -7,7 +7,7 @@
                     <!-- Main menu -->
                     <li class="current"><a href="/dashboard"><i class="glyphicon glyphicon-home"></i> Dashboard</a></li>
                     <li><a href="/meeting"><i class="glyphicon glyphicon-list"></i>Meetings</a></li>
-                    <li><a href="/summerize"><i class="glyphicon glyphicon-sound-stereo"></i>Tasks</a></li>
+                    <li><a href="/task"><i class="glyphicon glyphicon-sound-stereo"></i>Users</a></li>
                     <!-- <li><a href="/calendar"><i class="glyphicon glyphicon-calendar"></i> Events</a></li> -->
                     <li><a href="/" (click)="authService.logout()"><i class="glyphicon glyphicon-log-out"></i> log out</a></li><!-- LOG OUT PAGE -->
                 </ul>
@@ -19,7 +19,7 @@
     <div class="col-md-8">
       <div class="content-box-large"> 
         <div class="panel-heading">
-        <div class="panel-title">All Completed Meetings:</div>
+        <div class="panel-title">All Users Of EasyMeet</div>
         
         <div class="panel-options">
           <a href="#" data-rel="collapse"><i class="glyphicon glyphicon-refresh"></i></a>
@@ -31,37 +31,17 @@
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Title</th>
-                    <th>Agenda</th>
-                    <th>Date of Conduction</th>
-                    <th>Created By</th>
-                    <th>Summarize View</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Total Meeting Created</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr>
-                    <td>1</td>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                    <td>___</td>
-                    <td><a href="/summary"><button class="btn btn-primary" ng-click="view">View</button></a></td>
-                  </tr>
-                  <tr>
-                    <td>2</td>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                    <td>___</td>
-                    <td><a href="/summary"><button class="btn btn-primary">View</button></a></td>
-                  </tr>
-                  <tr >
-                    <td>3</td>
-                    <td>Larry</td>
-                    <td>the Bird</td>
-                    <td>@twitter</td>
-                    <td>____</td>
-                    <td><a href="/summary"><button class="btn btn-primary">View</button></a></td>
+                <tbody >
+                  <tr *ngFor="let user of userArray ;let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.total_meeting}}</td>
                   </tr>
                 </tbody>
               </table>

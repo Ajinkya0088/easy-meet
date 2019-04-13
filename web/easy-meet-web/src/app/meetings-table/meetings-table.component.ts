@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 
+import {OnChangeComponentService} from '../on-change-component.service';
+
+import {MeetingComponent} from '../meeting/meeting.component';
+
+import {Meetings} from '../meetings.model';
+
 @Component({
   selector: 'app-meetings-table',
   templateUrl: './meetings-table.component.html',
@@ -7,9 +13,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MeetingsTableComponent implements OnInit {
 
-  constructor() { }
+  constructor(private click:OnChangeComponentService,private m:MeetingComponent) { 
 
+  }
   ngOnInit() {
   }
+  
 
 }
