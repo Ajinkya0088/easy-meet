@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore'
 import { AuthService } from  '../auth/auth.service';
 import{Users} from '../users.model';
+import { Task } from '../task.model';
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
@@ -10,29 +11,27 @@ import{Users} from '../users.model';
 })
 export class TaskComponent implements OnInit {
 
-  userArray:Array<Users>;
+  taskArray:Array<Task>;
   constructor(private fire : AngularFirestore) {
-    this.userArray=new Array();
+    this.taskArray=new Array();
    }
-   u:Users;
-  user:Users=  JSON.parse(localStorage.getItem('user'));
+   t:Task;
   ngOnInit() {
-    this.getUser();
+    this.getTask();
   }
   i:number =0;
-  getUser() {
-   this.fire.collection('users').get().subscribe(res=>{
-     res.docs.forEach(e=>{
-       console.log(e.data());
-       var u=e.data() as Users;
-       console.log(u.email)
-       this.fire.collection('users_meetings').doc(u.email).get().subscribe(res=>{
-        u.total_meeting = Object.keys(res.data() as string[]).length
-        this.userArray.push(u);
-      })
-       
-     })
-   })
+  getTask() {
+    this.fire.collection('tasks').doc(JSON.parse(localStorage.getItem('user')).email)
+    .get()
+    .subscribe((res) =>{
+      var ids=res.data() as string[];
+      const len=Object.keys(ids).length;
+      for(this.i=0;this.i<len;this.i++){
+        //  console.log(ids[this.i])
+         this.t=ids[this.i] as any;
+         this.taskArray.push(this.t);
+      }
+    })
    }
 }
  
