@@ -2,19 +2,16 @@ package com.nerds.easymeet.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.util.TypedValue;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.nerds.easymeet.NewMeetingService;
+import com.nerds.easymeet.services.NewMeetingService;
 import com.nerds.easymeet.R;
 import com.nerds.easymeet.fragments.MeetingsFragment;
 import com.nerds.easymeet.fragments.TasksFragment;

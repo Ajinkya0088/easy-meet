@@ -38,7 +38,7 @@ import pl.droidsonroids.gif.GifImageView;
 
 public class RecordMeetingActivity extends AppCompatActivity {
 
-    private TextView date, time, title, desc;
+    private TextView date, time, title, desc, number_of_participants;
     private MeetingModel meeting;
     private CardView meetingCard;
     private CardView recordButton;
@@ -63,6 +63,7 @@ public class RecordMeetingActivity extends AppCompatActivity {
 
         title.setText(meeting.getTitle());
         desc.setText(meeting.getDescription());
+        number_of_participants.setText(String.valueOf(meeting.getParticipants().size()));
         Calendar calendar = Calendar.getInstance(Locale.US);
         calendar.setTimeInMillis(meeting.getTimestamp());
         date.setText(android.text.format.DateFormat.format("dd/MM/yyyy", calendar));
@@ -140,6 +141,7 @@ public class RecordMeetingActivity extends AppCompatActivity {
         desc = findViewById(R.id.meeting_desc);
         recordButtonTV = findViewById(R.id.record_button_tv);
         meetingCard = findViewById(R.id.meeting_cv);
+        number_of_participants = findViewById(R.id.number_of_participants);
         recordingGif = findViewById(R.id.recording_gif);
     }
 
@@ -153,14 +155,16 @@ public class RecordMeetingActivity extends AppCompatActivity {
             if (speechResults.getResults() != null) {
                 if (!speechResults.getResults().isEmpty()) {
                     if (speechResults.getResults().get(0).isFinalResults()) {
-                        transcriptBuilder.append(speechResults.getResults().get(0).getAlternatives().get(0).getTranscript());
-                        speechTimestamps.addAll(speechResults.getResults().get(0).getAlternatives().get(0).getTimestamps());
+                        transcriptBuilder.append(speechResults.getResults().get(0)
+                                .getAlternatives().get(0).getTranscript());
+                        speechTimestamps.addAll(speechResults.getResults().get(0)
+                                .getAlternatives().get(0).getTimestamps());
 
                     }
                 }
             }
             if (speechResults.getSpeakerLabels() != null) {
-                List<SpeakerLabelsResult> speakerLabelsResults = speechResults.getSpeakerLabels();
+                List<SpeakerLabelsResult> speakerLabelsResults=speechResults.getSpeakerLabels();
                 for (SpeakerLabelsResult speakerLabel : speakerLabelsResults) {
                     speakers.add(new Speaker(
                             speakerLabel.getSpeaker(),
@@ -225,7 +229,8 @@ public class RecordMeetingActivity extends AppCompatActivity {
             speakersTranscripts.put(String.valueOf(speakerLabel),
                     speakersTranscripts.get(String.valueOf(speakerLabel)) == null ?
                             stringBuilder.toString().replace("  ", " ") :
-                            (speakersTranscripts.get(String.valueOf(speakerLabel)) + " " + stringBuilder.toString())
+                            (speakersTranscripts.get(String.valueOf(speakerLabel)) + " "
+                                    + stringBuilder.toString())
                                     .replace("  ", " "));
 
         }

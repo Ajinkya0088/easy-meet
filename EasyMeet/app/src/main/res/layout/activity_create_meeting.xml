@@ -6,195 +6,231 @@
     android:layout_height="match_parent"
     tools:context=".activities.CreateMeetingActivity">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/app_bar_layout"
-        android:background="#F3F3F3"
-        android:clipToPadding="false">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/app_bar_layout">
 
-        <LinearLayout
-            android:id="@+id/date_time_layout"
-            android:layout_width="match_parent"
-            android:layout_height="84dp"
-            android:baselineAligned="false"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:padding="16dp"
-            android:weightSum="2">
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="8dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <EditText
-                        android:id="@+id/time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:gravity="center"
-                        android:hint="@string/time"
-                        android:inputType="time"
-                        android:padding="4dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        tools:ignore="Autofill,SpUsage" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="8dp"
-                android:layout_weight="1"
-                app:cardBackgroundColor="@android:color/white"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="6dp">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/date_tv_layout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:gravity="center">
-
-                    <EditText
-                        android:id="@+id/date"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/transparent"
-                        android:gravity="center"
-                        android:hint="@string/date"
-                        android:inputType="date"
-                        android:padding="4dp"
-                        android:textColor="@android:color/black"
-                        android:textSize="18dp"
-                        tools:ignore="Autofill,SpUsage" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </androidx.cardview.widget.CardView>
-        </LinearLayout>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/meeting_desc_tv_layout"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/meeting_title_tv_layout"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <EditText
-                    android:id="@+id/meeting_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:hint="@string/meeting_description"
-                    android:inputType="textMultiLine"
-                    android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="18dp"
-                    tools:ignore="Autofill,SpUsage" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/meeting_title_tv_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/date_time_layout"
-            android:layout_margin="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp">
-
-                <EditText
-                    android:id="@+id/meeting_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:gravity="center_vertical"
-                    android:hint="@string/meeting_title"
-                    android:inputType="textMultiLine"
-                    android:padding="8dp"
-                    android:textColor="@android:color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    tools:ignore="Autofill,SpUsage" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/meeting_desc_tv_layout"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            app:cardCornerRadius="12dp"
-            app:cardElevation="6dp">
+            android:background="#F3F3F3"
+            android:clipToPadding="false">
 
             <LinearLayout
+                android:id="@+id/date_time_layout"
+                android:layout_width="match_parent"
+                android:layout_height="84dp"
+                android:baselineAligned="false"
+                android:clipToPadding="false"
+                android:orientation="horizontal"
+                android:padding="16dp"
+                android:weightSum="2">
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="6dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:gravity="center"
+                            android:hint="@string/time"
+                            android:inputType="time"
+                            android:padding="4dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="18dp"
+                            tools:ignore="Autofill,SpUsage" />
+
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    app:cardBackgroundColor="@android:color/white"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="6dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/date_tv_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/date"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/transparent"
+                            android:gravity="center"
+                            android:hint="@string/date"
+                            android:inputType="date"
+                            android:padding="4dp"
+                            android:textColor="@android:color/black"
+                            android:textSize="18dp"
+                            tools:ignore="Autofill,SpUsage" />
+                    </com.google.android.material.textfield.TextInputLayout>
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/meeting_desc_tv_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_below="@id/meeting_title_tv_layout"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
 
-                <LinearLayout
-                    android:id="@+id/add_participant_button"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:background="@android:color/holo_red_dark">
+                    android:layout_margin="8dp">
+
+                    <EditText
+                        android:id="@+id/meeting_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="@string/meeting_description"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
+                        tools:ignore="Autofill,SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/meeting_title_tv_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/date_time_layout"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <EditText
+                        android:id="@+id/meeting_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="@string/meeting_title"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
+                        android:textStyle="bold"
+                        tools:ignore="Autofill,SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/meeting_place_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/meeting_desc_tv_layout"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp">
+
+                    <EditText
+                        android:id="@+id/meeting_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/transparent"
+                        android:hint="@string/meeting_location"
+                        android:inputType="textMultiLine"
+                        android:padding="8dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="18dp"
+                        tools:ignore="Autofill,SpUsage" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/meeting_place_layout"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="6dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:id="@+id/add_participant_button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:background="@android:color/holo_red_dark">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:padding="8dp"
+                            android:text="@string/add_participant"
+                            android:textColor="@android:color/white"
+                            android:textSize="16dp"
+                            android:textStyle="bold"
+                            tools:ignore="SpUsage" />
+                    </LinearLayout>
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:gravity="center"
-                        android:padding="8dp"
-                        android:text="@string/add_participant"
-                        android:textColor="@android:color/white"
-                        android:textSize="16dp"
-                        android:textStyle="bold"
-                        tools:ignore="SpUsage" />
+                        android:layout_height="wrap_content"
+                        android:padding="4dp"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
+                        android:text="@string/meeting_participants" />
+
+                    <include layout="@layout/participants_list_layout" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="4dp"
-                    android:paddingStart="16dp"
-                    android:paddingEnd="16dp"
-                    android:text="@string/meeting_participants" />
-
-                <include layout="@layout/participants_list_layout" />
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
-    </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </ScrollView>
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"

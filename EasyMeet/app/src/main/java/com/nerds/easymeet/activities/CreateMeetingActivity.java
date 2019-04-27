@@ -25,9 +25,9 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.nerds.easymeet.R;
 import com.nerds.easymeet.data.Constants;
 import com.nerds.easymeet.data.MeetingModel;
-import com.nerds.easymeet.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -59,6 +59,8 @@ public class CreateMeetingActivity extends AppCompatActivity {
     private ArrayList<String> finalParticipants;
     private int count;
     private AlertDialog waitDialog;
+    private TextView placeTV;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +149,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
             newMeeting.setDescription(descriptionTextView.getText().toString());
             newMeeting.setCreater_id(USER_ID);
             newMeeting.setParticipants(finalParticipants);
+            newMeeting.setPlace(placeTV.getText().toString());
 
             firestore.collection(Constants.MEETING_COLLECTION)
                     .add(newMeeting)
@@ -156,7 +159,6 @@ public class CreateMeetingActivity extends AppCompatActivity {
                                 .document(meetingId)
                                 .update("id", meetingId);
                         addMeetingToParticipants();
-//                            Toast.makeText(CreateMeetingActivity.this, "Meeting Created Successfully!", Toast.LENGTH_LONG).show();
                     });
         }
     };
@@ -264,6 +266,7 @@ public class CreateMeetingActivity extends AppCompatActivity {
         submitButton = findViewById(R.id.submit_meeting_button);
         titleTextView = findViewById(R.id.meeting_title);
         descriptionTextView = findViewById(R.id.meeting_desc);
+        placeTV = findViewById(R.id.meeting_place);
     }
 
     private void showDatePickerDialog() {

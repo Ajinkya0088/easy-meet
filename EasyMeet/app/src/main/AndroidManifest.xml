@@ -25,11 +25,11 @@
         </activity>
 
         <service
-            android:name=".NewTaskService"
+            android:name=".services.NewTaskService"
             android:enabled="true"
             android:exported="true" />
         <service
-            android:name=".NewMeetingService"
+            android:name=".services.NewMeetingService"
             android:enabled="true"
             android:exported="true" />
     </application>

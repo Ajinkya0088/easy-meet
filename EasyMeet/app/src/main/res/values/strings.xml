@@ -52,6 +52,14 @@
     <string name="channel_description">Notify user about new meetings</string>
     <string name="assigned_to_me">Assigned To Me</string>
     <string name="assigned_by_me">Assigned By Me</string>
+    <string name="meeting_location">Place</string>
+    <string name="place">Meeting Place</string>
+    <string name="tasks">tasks</string>
+    <string name="assigner">Assigned By</string>
+    <string name="status">Status</string>
+    <string name="change_status">Change Status</string>
+    <string name="pending">Pending</string>
+    <string name="done">Done</string>
 
     <string-array name="spinner_options">
         <item>My Meetings</item>

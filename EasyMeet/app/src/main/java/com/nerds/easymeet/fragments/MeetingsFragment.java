@@ -156,6 +156,7 @@ public class MeetingsFragment extends Fragment {
             calendar.setTimeInMillis(meeting.getTimestamp());
             holder.date.setText(android.text.format.DateFormat.format("dd/MM/yyyy", calendar));
             holder.time.setText(android.text.format.DateFormat.format("HH:mm", calendar));
+            holder.number_of_participants.setText(String.valueOf(meeting.getParticipants().size()));
 
         }
 
@@ -165,7 +166,7 @@ public class MeetingsFragment extends Fragment {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder {
-            TextView title, desc, date, time;
+            TextView title, desc, date, time, number_of_participants;
             CardView cardView;
 
             ViewHolder(@NonNull final View itemView) {
@@ -175,6 +176,7 @@ public class MeetingsFragment extends Fragment {
                 date = itemView.findViewById(R.id.meeting_date);
                 time = itemView.findViewById(R.id.meeting_time);
                 cardView = itemView.findViewById(R.id.meeting_cv);
+                number_of_participants = itemView.findViewById(R.id.number_of_participants);
 
                 cardView.setOnClickListener(v -> {
                     MeetingModel clickedMeeting = meetings.get(getAdapterPosition());

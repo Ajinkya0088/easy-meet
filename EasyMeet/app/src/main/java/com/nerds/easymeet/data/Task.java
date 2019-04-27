@@ -7,17 +7,27 @@ public class Task implements Serializable {
     public String task;
     public String assigner_id;
     public boolean status = false;
+    public long timestamp;
 
     public Task() {
 
     }
 
-    public Task(String meetingId, String task, String assigner_id, boolean status) {
+    public Task(String meetingId, long timestamp, String task, String assigner_id, boolean status) {
         this.meetingId = meetingId;
         this.task = task;
         this.assigner_id = assigner_id;
         this.status = status;
     }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(long timestamp) {
+        this.timestamp = timestamp;
+    }
+
 
     public boolean getStatus() {
         return status;

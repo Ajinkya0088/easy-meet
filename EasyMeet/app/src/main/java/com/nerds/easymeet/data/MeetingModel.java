@@ -14,6 +14,7 @@ public class MeetingModel implements Serializable {
     public Map<String, String> speaker_labels;
     public String summery;
     public double sentiment;
+    public String place;
 
 
     public String getId() {
@@ -94,5 +95,13 @@ public class MeetingModel implements Serializable {
 
     public void setCreater_id(String creater_id) {
         this.creater_id = creater_id;
+    }
+
+    public String getPlace() {
+        return place;
+    }
+
+    public void setPlace(String place) {
+        this.place = place;
     }
 }

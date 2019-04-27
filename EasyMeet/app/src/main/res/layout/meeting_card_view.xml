@@ -72,14 +72,14 @@
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="0dp"
                 android:orientation="vertical"
-                android:weightSum="2">
+                android:weightSum="5">
 
                 <TextView
                     android:id="@+id/meeting_date"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:background="#03A9F4"
                     android:gravity="center"
                     android:paddingStart="8dp"
@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_gravity="center"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:background="#FF5722"
                     android:gravity="center"
                     android:text="@string/sample_time"
@@ -108,7 +108,29 @@
                     android:textStyle="bold"
                     tools:ignore="SpUsage" />
 
+                <LinearLayout
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:src="@drawable/group"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:id="@+id/number_of_participants"
+                        android:layout_marginStart="4dp"
+                        android:text="3"
+                        android:textColor="@android:color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
                 </LinearLayout>
+            </LinearLayout>
 
             <View
                 android:layout_width="1dp"

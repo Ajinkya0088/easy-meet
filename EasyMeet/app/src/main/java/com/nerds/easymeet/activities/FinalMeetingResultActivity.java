@@ -42,10 +42,11 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
 
     private MeetingModel meeting;
     private RecyclerView participants_rv, speaker_labels_rv;
-    private TextView date, time, title, desc, sentiment, transciption, keywords_tv, creater_tv;
+    private TextView date, time, title, desc, sentiment, transciption, keywords_tv, creator_tv;
     private StringBuilder keywords;
     private Double sentimentSum, sentimentMean;
     private int keywordsCount;
+    private TextView place;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +80,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
         title.setText(meeting.getTitle());
         desc.setText(meeting.getDescription());
         transciption.setText(meeting.getSpeech_to_text());
+        place.setText(meeting.getPlace());
         participants_rv.setLayoutManager(new LinearLayoutManager(this));
         participants_rv.setAdapter(new ParticipantsAdapter());
         speaker_labels_rv.setLayoutManager(new LinearLayoutManager(this));
@@ -90,7 +92,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
                 .document(meeting.getCreater_id())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
-                    creater_tv.setText(String.format("Created By %s", documentSnapshot.getData().get("name").toString()));
+                    creator_tv.setText(String.format("Created By %s", documentSnapshot.getData().get("name").toString()));
                 });
     }
 
@@ -100,7 +102,8 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
                 .build();
 
         NaturalLanguageUnderstanding nlu =
-                new NaturalLanguageUnderstanding("2018-11-16", iamOptions);
+                new NaturalLanguageUnderstanding("2018-11-16",
+                        iamOptions);
 
         nlu.setEndPoint(Constants.NLU_API_URL);
 
@@ -132,7 +135,9 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
 
         runOnUiThread(() -> {
             keywords_tv.setText(keywords.toString());
-            sentiment.setText(String.format("%s %s", sentimentMean < 0 ? "Negative" : "Positive", String.valueOf(sentimentMean)));
+            sentiment.setText(String.format("%s %s", sentimentMean < 0 ?
+                    "Negative" : "Positive",
+                    String.valueOf(sentimentMean)));
             updateMeeting();
         });
 
@@ -158,7 +163,8 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
         speaker_labels_rv = findViewById(R.id.speaker_labels_rv);
         transciption = findViewById(R.id.meeting_transciption);
         keywords_tv = findViewById(R.id.keywords);
-        creater_tv = findViewById(R.id.creator_text_view);
+        creator_tv = findViewById(R.id.creator_text_view);
+        place = findViewById(R.id.meeting_place);
     }
 
     private class ParticipantsAdapter extends RecyclerView.Adapter<ParticipantsAdapter.ViewHolder> {
@@ -210,6 +216,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
                                     tasks = new HashMap<>();
                                     tasks.put("0", new Task(
                                             meeting.getId(),
+                                            System.currentTimeMillis(),
                                             task.getText().toString(),
                                             PreferenceManager.getDefaultSharedPreferences(FinalMeetingResultActivity.this).getString(Constants.USER_ID, ""),
                                             false));
@@ -221,6 +228,7 @@ public class FinalMeetingResultActivity extends AppCompatActivity {
                                             String.valueOf(tasks.size()),
                                             new Task(
                                                     meeting.getId(),
+                                                    System.currentTimeMillis(),
                                                     task.getText().toString(),
                                                     PreferenceManager.getDefaultSharedPreferences(FinalMeetingResultActivity.this).getString(Constants.USER_ID, ""),
                                                     false))
