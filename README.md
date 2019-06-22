@@ -25,3 +25,9 @@
 
 * Repo owner or admin
 * Other community or team contact
+
+### Web Part or Dashboard ###
+* Working
+![web_working](web_working.gif)
+* Security
+![web_security](web_security.gif)
