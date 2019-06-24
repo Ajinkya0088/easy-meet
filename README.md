@@ -1,33 +1,39 @@
-# Mini Project #
-# Meeting Analyser #
-### What is this repository for? ###
+<div align="center">
+  <h1>Easy-Meet</h1>
+  <img src="reunion.png" width="150"" height="150">
+</div>
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Mini Project For Semester 6 (2019)
 
-### How do I get set up? ###
+## Functionalities
+* Arrange Meetings, add people and notify them
+* Record Meeting
+* Get Transcripts of the meeting
+* Speaker Diarization
+* Meeting Summarization
+* Task assigning
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+## Technology Stack
+* Android
+* Angular
+* Firebase
+* HTML, CSS, Bootstrap
+* IBM Watson STT and NLU API
 
-### Contribution guidelines ###
+## Demo ##
+<div align="center">
+  <br><b>Android App</b></br>
+  <img src="app_demo.gif" width="200px">
+  <br><b>Web</b></br>
+  <img src="web_working.gif" width="500px">
+  <img src="web_security.gif" width="500px">
+</div>
 
-* Writing tests
-* Code review
-* Other guidelines
+<br>
 
-### Who do I talk to? ###
+> [All Screenshots of the app](https://github.com/10aditya/easy-meet/tree/master/Screenshots)
 
-* Repo owner or admin
-* Other community or team contact
-
-### Web Part or Dashboard ###
-* Working
-![web_working](web_working.gif)
-* Security
-![web_security](web_security.gif)
+## Contributors
+* [Aditya Pingle](https://github.com/10aditya)
+* [Ajinkya Pawar](https://github.com/Ajinkya0088)
+* [Nikhil Patil](https://github.com/Nikhil4599)
